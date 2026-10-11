@@ -1,0 +1,6 @@
+// The same IP touched SSH, Telnet, and HTTP. Usually a scanner mapping the box.
+HoneypotEvents_CL
+| summarize Sensors = dcount(Sensor), SensorList = make_set(Sensor), Events = count(),
+            Country = take_any(Country), Asn = take_any(Asn)
+    by SrcIp
+| where Sensors >= 3

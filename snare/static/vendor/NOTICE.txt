@@ -1,0 +1,1 @@
+Leaflet 1.9.4 (BSD-2-Clause), topojson-client 3.1.0 (ISC), world-atlas 2.0.2 countries-110m (ISC, data from Natural Earth, public domain).

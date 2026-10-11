@@ -1,0 +1,5 @@
+// Which SSH libraries the bots use (Go, libssh, paramiko and so on).
+HoneypotEvents_CL
+| where Sensor == "ssh" and isnotempty(Client)
+| summarize Attempts = count(), IPs = dcount(SrcIp) by Client
+| order by Attempts desc

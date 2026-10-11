@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Snare Live Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='5' fill='%237cff9e'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/static/vendor/leaflet.css">
+<link rel="stylesheet" href="/static/map.css">
+</head>
+<body>
+<div id="map"></div>
+
+<header class="topbar">
+  <div class="brand"><span class="dot" id="live-dot"></span>SNARE <span class="muted" id="home-name"></span></div>
+  <div class="legend">
+    <span><i class="sw ssh"></i>SSH</span>
+    <span><i class="sw telnet"></i>Telnet</span>
+    <span><i class="sw http"></i>HTTP</span>
+  </div>
+</header>
+
+<aside class="panel">
+  <section class="kpis">
+    <div><b id="k-total">0</b><span>events</span></div>
+    <div><b id="k-logins">0</b><span>login tries</span></div>
+    <div><b id="k-ips">0</b><span>unique IPs</span></div>
+    <div><b id="k-countries">0</b><span>countries</span></div>
+  </section>
+
+  <section>
+    <h2>Events per minute <span class="muted">last hour</span></h2>
+    <canvas id="spark" height="48"></canvas>
+  </section>
+
+  <section>
+    <h2>Top countries</h2>
+    <ol class="bars" id="t-countries"></ol>
+  </section>
+
+  <section class="two">
+    <div><h2>Usernames</h2><ol class="list" id="t-users"></ol></div>
+    <div><h2>Passwords</h2><ol class="list" id="t-pass"></ol></div>
+  </section>
+
+  <section>
+    <h2>Live feed</h2>
+    <ul class="feed" id="feed"></ul>
+  </section>
+</aside>
+
+<div class="status" id="status">connecting...</div>
+
+<script src="/static/vendor/leaflet.js"></script>
+<script src="/static/vendor/topojson-client.min.js"></script>
+<script src="/static/map.js"></script>
+</body>
+</html>

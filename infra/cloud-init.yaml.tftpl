@@ -1,0 +1,65 @@
+#cloud-config
+# Rendered by Terraform. Moves the real sshd off port 22, installs Snare,
+# and runs it as a locked down systemd service.
+
+package_update: true
+packages:
+  - git
+  - python3-venv
+
+write_files:
+  - path: /etc/ssh/sshd_config.d/10-snare.conf
+    permissions: "0644"
+    content: |
+      Port ${admin_ssh_port}
+      PasswordAuthentication no
+      PermitRootLogin no
+
+  - path: /etc/snare/snare.env
+    permissions: "0600"
+    content: |
+      SNARE_BIND=0.0.0.0
+      SNARE_SSH_PORT=22
+      SNARE_TELNET_PORT=23
+      SNARE_HTTP_PORT=80
+      SNARE_MAP_BIND=0.0.0.0
+      SNARE_MAP_PORT=8080
+      SNARE_MAP_TOKEN=${map_token}
+      SNARE_HOME_LAT=${home_lat}
+      SNARE_HOME_LON=${home_lon}
+      SNARE_NAME=${location}
+      SNARE_DATA_DIR=/var/lib/snare
+      SNARE_DCE_ENDPOINT=${dce_endpoint}
+      SNARE_DCR_ID=${dcr_id}
+      SNARE_STREAM=${stream_name}
+      SNARE_GEOIP_CITY=/var/lib/snare/geoip/GeoLite2-City.mmdb
+      SNARE_GEOIP_ASN=/var/lib/snare/geoip/GeoLite2-ASN.mmdb
+
+runcmd:
+  # 1. Real SSH moves to the admin port first, so port 22 is free for the bait.
+  - systemctl disable --now ssh.socket || true
+  - systemctl enable ssh.service
+  - systemctl restart ssh.service
+
+  # 2. Service user with no shell and no home login.
+  - useradd --system --no-create-home --shell /usr/sbin/nologin snare
+  - mkdir -p /opt/snare /var/lib/snare/geoip
+  - git clone --depth 1 ${repo_url} /opt/snare/src
+  - python3 -m venv /opt/snare/venv
+  - /opt/snare/venv/bin/pip install --quiet "/opt/snare/src[azure,geoip]"
+
+  # 3. Optional offline GeoIP databases.
+%{ if maxmind_license_key != "" ~}
+  - |
+    for ed in GeoLite2-City GeoLite2-ASN; do
+      curl -fsSL "https://download.maxmind.com/app/geoip_download?edition_id=$${ed}&license_key=${maxmind_license_key}&suffix=tar.gz" -o /tmp/$${ed}.tgz \
+        && tar -xzf /tmp/$${ed}.tgz -C /tmp \
+        && cp /tmp/$${ed}_*/$${ed}.mmdb /var/lib/snare/geoip/ ; done
+%{ endif ~}
+
+  - chown -R snare:snare /var/lib/snare
+  - chown root:snare /etc/snare/snare.env
+  - chmod 0640 /etc/snare/snare.env
+  - cp /opt/snare/src/deploy/snare.service /etc/systemd/system/snare.service
+  - systemctl daemon-reload
+  - systemctl enable --now snare.service

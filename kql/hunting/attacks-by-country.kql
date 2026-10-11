@@ -1,0 +1,4 @@
+HoneypotEvents_CL
+| where isnotempty(Country)
+| summarize Events = count(), IPs = dcount(SrcIp) by Country
+| order by Events desc

@@ -1,0 +1,3 @@
+HoneypotEvents_CL
+| summarize Events = count() by bin(TimeGenerated, 1h), Sensor
+| render timechart

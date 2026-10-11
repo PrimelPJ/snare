@@ -1,0 +1,5 @@
+// Feeds the workbook map: attacks by location in the selected time range.
+HoneypotEvents_CL
+| where isnotempty(Latitude) and isnotempty(Longitude)
+| summarize Events = count(), IPs = dcount(SrcIp) by Latitude, Longitude, Country, City
+| order by Events desc

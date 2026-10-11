@@ -1,0 +1,9 @@
+// One IP making many login attempts in a short window.
+HoneypotEvents_CL
+| where Kind == "login_attempt"
+| summarize Attempts = count(), Usernames = dcount(Username), Sensors = make_set(Sensor),
+            FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated),
+            Country = take_any(Country), Asn = take_any(Asn)
+    by SrcIp
+| where Attempts >= 20
+| order by Attempts desc
