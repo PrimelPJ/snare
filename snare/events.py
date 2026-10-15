@@ -23,6 +23,8 @@ KINDS = {CONNECT, LOGIN_ATTEMPT, HTTP_REQUEST}
 
 MAX_FIELD = 256  # attackers send junk; cap every string we store
 
+DEFAULT_PORTS = {"ssh": 22, "telnet": 23, "http": 80}
+
 
 def _clip(value: str | None) -> str | None:
     if value is None:
