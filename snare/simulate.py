@@ -41,7 +41,7 @@ ORIGINS = [
     ("Australia", "AU", "Sydney", -33.87, 151.21, 1),
 ]
 
-USERS = ["root"] * 12 + ["admin"] * 8 + ["ubuntu", "user", "test", "oracle", "postgres", "pi", "support", "guest", "ftpuser", "git", "deploy", "solana", "sol"]
+USERS = ["root"] * 12 + ["admin"] * 8 + ["ubuntu", "user", "test", "oracle", "postgres", "pi", "support", "guest", "ftpuser", "git", "deploy", "solana", "sol", "mysql", "www-data", "nagios"]
 PASSWORDS = ["123456"] * 6 + ["admin"] * 4 + ["password", "root", "12345678", "1234", "qwerty", "123", "P@ssw0rd", "admin123", "toor", "raspberry", "ubuntu", "1qaz2wsx", "abc123", ""]
 TELNET_CREDS = [("root", "xc3511"), ("root", "vizxv"), ("admin", "admin"), ("root", "default"), ("support", "support"), ("root", "7ujMko0admin"), ("guest", "12345")]
 PATHS = ["/", "/.env", "/wp-login.php", "/admin", "/phpmyadmin/", "/boaform/admin/formLogin", "/cgi-bin/luci", "/.git/config", "/HNAP1/", "/login", "/actuator/env", "/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php"]
