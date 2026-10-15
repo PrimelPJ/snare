@@ -67,6 +67,9 @@ class Stats:
         counts = {m: c for m, c in self._timeline}
         return [counts.get(m, 0) for m in range(current - TIMELINE_MINUTES + 1, current + 1)]
 
+    def top_ips(self, n: int = TOP_N) -> list[list]:
+        return [[ip, count] for ip, count in self.ips.most_common(n)]
+
     def snapshot(self) -> dict[str, Any]:
         top = lambda c: [[k, v] for k, v in c.most_common(TOP_N)]  # noqa: E731
         return {
