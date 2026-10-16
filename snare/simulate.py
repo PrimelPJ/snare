@@ -44,7 +44,7 @@ ORIGINS = [
 USERS = ["root"] * 12 + ["admin"] * 8 + ["ubuntu", "user", "test", "oracle", "postgres", "pi", "support", "guest", "ftpuser", "git", "deploy", "solana", "sol", "mysql", "www-data", "nagios"]
 PASSWORDS = ["123456"] * 6 + ["admin"] * 4 + ["password", "root", "12345678", "1234", "qwerty", "123", "P@ssw0rd", "admin123", "toor", "raspberry", "ubuntu", "1qaz2wsx", "abc123", ""]
 TELNET_CREDS = [("root", "xc3511"), ("root", "vizxv"), ("admin", "admin"), ("root", "default"), ("support", "support"), ("root", "7ujMko0admin"), ("guest", "12345")]
-PATHS = ["/", "/.env", "/wp-login.php", "/admin", "/phpmyadmin/", "/boaform/admin/formLogin", "/cgi-bin/luci", "/.git/config", "/HNAP1/", "/login", "/actuator/env", "/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php"]
+PATHS = ["/", "/.env", "/wp-login.php", "/admin", "/phpmyadmin/", "/boaform/admin/formLogin", "/cgi-bin/luci", "/.git/config", "/HNAP1/", "/login", "/actuator/env", "/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php", "/wp-config.php.bak", "/server-status"]
 AGENTS = ["Mozilla/5.0 (Windows NT 10.0; Win64; x64)", "curl/7.88.1", "python-requests/2.31.0", "Go-http-client/1.1", "zgrab/0.x", "Mozilla/5.0 (compatible; CensysInspect/1.1)"]
 SSH_CLIENTS = ["SSH-2.0-Go", "SSH-2.0-libssh2_1.10.0", "SSH-2.0-PuTTY_Release_0.78", "SSH-2.0-paramiko_3.1.0", "SSH-2.0-OpenSSH_7.4"]
 
