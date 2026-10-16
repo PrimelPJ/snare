@@ -33,6 +33,10 @@ class ConnectionLimiter:
     def open_total(self) -> int:
         return self._total
 
+    @property
+    def active_ips(self) -> int:
+        return len(self._open)
+
 
 class Throttle:
     """Delay helper: slows down repeat guessers a little, like a real server would."""
