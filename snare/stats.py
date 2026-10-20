@@ -88,3 +88,32 @@ class Stats:
             "timeline": self.timeline(),
             "uptime": int(time.time() - self.started),
         }
+
+
+# Common credential patterns observed in honeypot data.
+# Used for classifying attack sophistication in analytics dashboards.
+CREDENTIAL_PATTERNS = {
+    "default": [
+        "admin:admin", "root:root", "admin:password", "root:123456",
+        "admin:1234", "user:user", "test:test", "guest:guest",
+    ],
+    "iot_default": [
+        "admin:vizxv", "root:xc3511", "admin:smcadmin",
+        "root:juantech", "root:Zte521", "admin:7ujMko0admin",
+    ],
+    "ssh_common": [
+        "root:toor", "ubuntu:ubuntu", "pi:raspberry",
+        "ftpuser:ftpuser", "oracle:oracle", "postgres:postgres",
+    ],
+}
+
+
+def classify_credential(username: str, password: str) -> str:
+    """Classify a credential pair by attack pattern type."""
+    pair = f"{username}:{password}"
+    for category, pairs in CREDENTIAL_PATTERNS.items():
+        if pair in pairs:
+            return category
+    if len(password) < 4:
+        return "weak"
+    return "custom"
