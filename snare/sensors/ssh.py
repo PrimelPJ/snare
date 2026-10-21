@@ -21,6 +21,8 @@ log = logging.getLogger(__name__)
 # Looks like a stock Ubuntu 22.04 box.
 SERVER_VERSION = "OpenSSH_8.9p1 Ubuntu-3ubuntu0.10"
 MAX_AUTH_ATTEMPTS = 6
+LOGIN_TIMEOUT = 30
+AUTH_FAILURE_DELAY = 0.5
 
 
 def load_host_key(path: Path) -> asyncssh.SSHKey:
@@ -88,7 +90,7 @@ class _Server(asyncssh.SSHServer):
             )
         )
         self.attempts += 1
-        await asyncio.sleep(0.5)  # real sshd pauses on failure
+        await asyncio.sleep(AUTH_FAILURE_DELAY)  # real sshd pauses on failure
         if self.attempts >= MAX_AUTH_ATTEMPTS and self.conn is not None:
             self.conn.close()  # same limit as OpenSSH's MaxAuthTries
         return False
@@ -108,7 +110,7 @@ async def start_ssh(
         port,
         server_host_keys=[key],
         server_version=SERVER_VERSION,
-        login_timeout=30,
+        login_timeout=LOGIN_TIMEOUT,
         allow_scp=False,
         keepalive_interval=0,
     )
