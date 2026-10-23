@@ -22,6 +22,7 @@ HTTP_REQUEST = "http_request"
 KINDS = {CONNECT, LOGIN_ATTEMPT, HTTP_REQUEST}
 
 MAX_FIELD = 256  # attackers send junk; cap every string we store
+DEFAULT_QUEUE_SIZE = 10_000  # max pending events before drops begin
 
 DEFAULT_PORTS = {"ssh": 22, "telnet": 23, "http": 80}
 
@@ -102,7 +103,7 @@ Handler = Callable[[Event], Awaitable[None]]
 class EventBus:
     """Fan events out to every subscriber without letting one slow sink block sensors."""
 
-    def __init__(self, queue_size: int = 10_000) -> None:
+    def __init__(self, queue_size: int = DEFAULT_QUEUE_SIZE) -> None:
         self._queue: asyncio.Queue[Event] = asyncio.Queue(maxsize=queue_size)
         self._handlers: list[Handler] = []
         self._enrichers: list[Callable[[Event], Awaitable[None]]] = []
