@@ -19,6 +19,7 @@ IAC = 255
 BANNER = b"\r\nUbuntu 22.04.4 LTS\r\n"
 LOGIN_PROMPT = b"\r\nlogin: "
 PASSWORD_PROMPT = b"Password: "
+LOGIN_FAILURE_MSG = b"\r\nLogin incorrect\r\n"
 MAX_TRIES = 3
 READ_TIMEOUT = 30
 MAX_LINE = 512
@@ -95,7 +96,7 @@ class TelnetSensor:
                     Event("telnet", LOGIN_ATTEMPT, ip, src_port, self.port, username=user, password=password)
                 )
                 await asyncio.sleep(1.0)
-                writer.write(b"\r\nLogin incorrect\r\n")
+                writer.write(LOGIN_FAILURE_MSG)
             await writer.drain()
         except (asyncio.TimeoutError, ConnectionError):
             pass
