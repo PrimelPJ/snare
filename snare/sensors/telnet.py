@@ -17,6 +17,9 @@ log = logging.getLogger(__name__)
 
 IAC = 255
 BANNER = b"\r\nUbuntu 22.04.4 LTS\r\n"
+LOGIN_PROMPT = b"\r\nlogin: "
+PASSWORD_PROMPT = b"Password: "
+LOGIN_FAILURE_MSG = b"\r\nLogin incorrect\r\n"
 MAX_TRIES = 3
 READ_TIMEOUT = 30
 MAX_LINE = 512
@@ -77,14 +80,14 @@ class TelnetSensor:
             # Ask the client to let us echo, like a real telnetd.
             writer.write(bytes([IAC, 251, 1, IAC, 251, 3]) + BANNER)
             for _ in range(MAX_TRIES):
-                writer.write(b"\r\nlogin: ")
+                writer.write(LOGIN_PROMPT)
                 await writer.drain()
                 user = await read_line(reader)
                 while user == "":  # skip blank lines and leftover CR/LF
                     user = await read_line(reader)
                 if user is None:
                     return
-                writer.write(b"Password: ")
+                writer.write(PASSWORD_PROMPT)
                 await writer.drain()
                 password = await read_line(reader)
                 if password is None:
@@ -93,7 +96,7 @@ class TelnetSensor:
                     Event("telnet", LOGIN_ATTEMPT, ip, src_port, self.port, username=user, password=password)
                 )
                 await asyncio.sleep(1.0)
-                writer.write(b"\r\nLogin incorrect\r\n")
+                writer.write(LOGIN_FAILURE_MSG)
             await writer.drain()
         except (asyncio.TimeoutError, ConnectionError):
             pass
