@@ -17,6 +17,8 @@ log = logging.getLogger(__name__)
 
 IAC = 255
 BANNER = b"\r\nUbuntu 22.04.4 LTS\r\n"
+LOGIN_PROMPT = b"\r\nlogin: "
+PASSWORD_PROMPT = b"Password: "
 MAX_TRIES = 3
 READ_TIMEOUT = 30
 MAX_LINE = 512
@@ -77,14 +79,14 @@ class TelnetSensor:
             # Ask the client to let us echo, like a real telnetd.
             writer.write(bytes([IAC, 251, 1, IAC, 251, 3]) + BANNER)
             for _ in range(MAX_TRIES):
-                writer.write(b"\r\nlogin: ")
+                writer.write(LOGIN_PROMPT)
                 await writer.drain()
                 user = await read_line(reader)
                 while user == "":  # skip blank lines and leftover CR/LF
                     user = await read_line(reader)
                 if user is None:
                     return
-                writer.write(b"Password: ")
+                writer.write(PASSWORD_PROMPT)
                 await writer.drain()
                 password = await read_line(reader)
                 if password is None:
