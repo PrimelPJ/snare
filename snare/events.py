@@ -19,12 +19,13 @@ log = logging.getLogger(__name__)
 CONNECT = "connect"
 LOGIN_ATTEMPT = "login_attempt"
 HTTP_REQUEST = "http_request"
-KINDS = {CONNECT, LOGIN_ATTEMPT, HTTP_REQUEST}
+FTP_REQUEST = "ftp_request"
+KINDS = {CONNECT, LOGIN_ATTEMPT, HTTP_REQUEST, FTP_REQUEST}
 
 MAX_FIELD = 256  # attackers send junk; cap every string we store
 DEFAULT_QUEUE_SIZE = 10_000  # max pending events before drops begin
 
-DEFAULT_PORTS = {"ssh": 22, "telnet": 23, "http": 80}
+DEFAULT_PORTS = {"ssh": 22, "telnet": 23, "http": 80, "ftp": 21}
 
 
 def _clip(value: str | None) -> str | None:
