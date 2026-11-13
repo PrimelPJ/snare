@@ -1,0 +1,6 @@
+// Most frequently requested HTTP paths, useful for tuning the exploit-probe detection rule.
+HoneypotEvents_CL
+| where Sensor == "http" and Kind == "http_request"
+| summarize Requests = count(), IPs = dcount(SrcIp) by Path
+| order by Requests desc
+| take 50
