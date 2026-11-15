@@ -38,11 +38,15 @@ class ConnectionLimiter:
         return len(self._open)
 
 
+MAX_BURST_DELAY = 2.0  # seconds; caps the doubled delay for high-rate guessers
+
+
 class Throttle:
     """Delay helper: slows down repeat guessers a little, like a real server would."""
 
-    def __init__(self, base_delay: float = 0.5) -> None:
+    def __init__(self, base_delay: float = 0.5, max_delay: float = MAX_BURST_DELAY) -> None:
         self.base_delay = base_delay
+        self.max_delay = max_delay
         self._last: dict[str, float] = {}
 
     def delay_for(self, ip: str) -> float:
@@ -50,7 +54,7 @@ class Throttle:
         last = self._last.get(ip)
         self._last[ip] = now
         if last is not None and now - last < 1.0:
-            return self.base_delay * 2
+            return min(self.base_delay * 2, self.max_delay)
         return self.base_delay
 
 
