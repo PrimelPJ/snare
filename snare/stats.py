@@ -105,6 +105,10 @@ CREDENTIAL_PATTERNS = {
         "root:toor", "ubuntu:ubuntu", "pi:raspberry",
         "ftpuser:ftpuser", "oracle:oracle", "postgres:postgres",
     ],
+    "iot_camera": [
+        "admin:ipcam", "admin:12345", "root:pass", "admin:888888",
+        "admin:666666", "root:1234", "admin:0000", "supervisor:supervisor",
+    ],
 }
 
 
