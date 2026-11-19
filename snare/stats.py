@@ -109,6 +109,15 @@ CREDENTIAL_PATTERNS = {
         "admin:ipcam", "admin:12345", "root:pass", "admin:888888",
         "admin:666666", "root:1234", "admin:0000", "supervisor:supervisor",
     ],
+    "cloud_service": [
+        "admin:hosting", "cpanel:cpanel", "admin:plesk", "root:plesk",
+        "admin:webmin", "root:webmin", "admin:directadmin",
+    ],
+    "router_vendor": [
+        "admin:admin1", "admin:password1", "admin:1234567890",
+        "admin:ubnt", "ubnt:ubnt", "admin:airlive",
+        "admin:tplink", "admin:netgear1",
+    ],
 }
 
 
