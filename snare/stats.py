@@ -118,6 +118,14 @@ CREDENTIAL_PATTERNS = {
         "admin:ubnt", "ubnt:ubnt", "admin:airlive",
         "admin:tplink", "admin:netgear1",
     ],
+    "web_shell": [
+        "admin:c99", "root:r57", "admin:wso", "admin:b374k",
+        "root:weevely", "admin:php-console", "admin:0x33",
+    ],
+    "kubernetes_default": [
+        "admin:admin", "kubernetes:kubernetes", "system:master",
+        "admin:kubeadmin", "root:kubeconfig", "kube:kube",
+    ],
 }
 
 

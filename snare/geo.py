@@ -39,6 +39,9 @@ class GeoInfo:
 
 EMPTY = GeoInfo()
 
+GEO_CACHE_SIZE = 50_000
+GEO_CACHE_TTL_S = 24 * 3600
+
 
 class Backend(Protocol):
     async def lookup(self, ip: str) -> GeoInfo | None: ...
