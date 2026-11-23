@@ -126,6 +126,11 @@ CREDENTIAL_PATTERNS = {
         "admin:admin", "kubernetes:kubernetes", "system:master",
         "admin:kubeadmin", "root:kubeconfig", "kube:kube",
     ],
+    "nas_vendor": [
+        "admin:admin", "admin:1234", "admin:synology", "root:synology",
+        "admin:qnap", "admin:qnapadmin", "root:qnap1234",
+        "admin:welc0me", "admin:wdcloud", "guest:guest",
+    ],
 }
 
 
